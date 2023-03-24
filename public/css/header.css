@@ -1,0 +1,87 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+header{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    position: sticky;
+    top:0;
+    z-index:1000;
+}
+
+#logo{
+    width: 60px;
+    margin-left: 40px;
+}
+
+#input-menu{
+    width: 60vh;
+    height: 30px;
+    border-radius: 20px;
+    border: solid gray 1px;
+}
+
+#login, #logout {
+    margin-left: 25px;
+    background-color: #d51b1b;
+    border: none;
+    width: 7vw;
+    height: 5vh;
+    border-radius: 20px;
+    cursor: pointer;
+    color: white;
+}
+
+#login:hover, #logout:hover {
+    background-color: #b9c1cc;
+    color: black;
+}
+
+
+.menu{
+    height: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+    border-bottom: solid black 2px;
+    font-family: 'Signika', sans-serif;
+    z-index: 0;
+}
+
+#user{
+    width: 35px;
+    margin-left: 50px;
+}
+
+#h-user{
+    margin-left: 40px;
+}
+
+.menu-buttons {
+    display: flex;
+    align-items: center;
+    margin-right: 50px;
+    justify-content: flex-end;
+}
+
+#register, #subtopic {
+    margin-left: 20px;
+    background-color: #b9c1cc;
+    border: none;
+    width: 7vw;
+    height: 5vh;
+    border-radius: 20px;
+    cursor: pointer;
+    color: black;
+}
+
+#register:hover, #subtopic:hover {
+    background-color: #d51b1b;
+    color:white;
+}

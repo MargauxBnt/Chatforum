@@ -1,0 +1,69 @@
+@font-face {
+  font-family: Shrikhand;
+  src: url('../fonts/Shrikhand-Regular.ttf');
+}
+
+.float {
+  background-image: url("../images/backgroundok.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top;
+  height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 100%;
+  text-align: center;
+  max-width: 120rem;
+  margin: 0;
+  /*font-family: 'Shrikhand', sans-serif;*/
+}
+
+.float h1{
+    font-family: 'Shrikhand', sans-serif;
+    font-size: 5rem;
+    font-weight: 900;
+    margin-top: 20px;
+    text-align: left;
+    align-self: flex-start;
+    margin-left: 120px; 
+    margin-top: 80px;
+    margin-bottom: 5px;
+    /*font-family: 'Playfair Display', serif;*/
+  }
+  
+  .float h1 span {
+    /*font-family: 'Red Hat Display', sans-serif;*/
+    font-size: 3rem;
+    font-weight: 500;
+    display: block;
+    margin-left : 160px;
+    color: #EF5C69;
+    line-height: 1; /* ajuster la valeur en fonction de vos préférences */
+  }
+  
+  @media (max-width: 768px) {
+    .float h1 {
+      font-size: 3rem;
+    }
+    .float h1 span {
+      font-size: 2rem;
+    }
+}
+
+#discover {
+    font-size: 1rem;
+    margin-left: 20px;
+    background-color: #e4852c;
+    border: none;
+    width: 20vw;
+    height: 5vh;
+    border-radius: 20px;
+    cursor: pointer;
+    color: white;
+}
+
+#discover:hover {
+  background-color: #b9c1cc;
+  color: black;
+}

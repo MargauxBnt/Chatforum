@@ -15,6 +15,7 @@
 <?php require "header.php"; ?>
 
 <div class="float">
+  <p>Cher(e)s ami(e)s félins,</p>
   <h1>
     Welcome <span>to the Purrfect Place !</span>
     <button id="discover">Découvrez les sujets du moment ! 😻</button>

@@ -13,7 +13,6 @@
   flex-direction: column;
   align-items: center;
   max-height: 100%;
-  text-align: center;
   max-width: 120rem;
   margin: 0;
   /*font-family: 'Shrikhand', sans-serif;*/
@@ -37,9 +36,9 @@
     font-size: 3rem;
     font-weight: 500;
     display: block;
-    margin-left : 160px;
+    margin-left : 120px;
     color: #EF5C69;
-    line-height: 1; /* ajuster la valeur en fonction de vos préférences */
+    line-height: 1; 
   }
   
   @media (max-width: 768px) {
@@ -50,6 +49,18 @@
       font-size: 2rem;
     }
 }
+
+.float p {
+  font-size: 1rem;
+  font-weight: 500;
+  display: block;
+  margin-top: 20px;
+  margin-left : 120px;
+  margin-bottom: 0; 
+  line-height: 1; 
+  font-family: 'Red Hat Display', sans-serif; 
+}
+
 
 #discover {
     font-size: 1rem;

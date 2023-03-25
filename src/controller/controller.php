@@ -8,7 +8,7 @@ function register() {
         try {
             // Vérification des données entrées par l'utilisateur
             if (!isset($_POST["username"]) || !isset($_POST["email"]) || !isset($_POST["password"])) {
-                throw new Exception("Veuillez remplir tous les champs");
+                throw new Exception("Il faut remplir tous les champs");
             }
 
             $username = $_POST["username"];
@@ -25,7 +25,7 @@ function register() {
             $userModel->createUser($username, $email, $password);
 
             // Message de succès d'inscription
-          $success_message = "Votre inscription a bien été enregistrée. Veuillez vous connecter.";
+          $success_message = "Ton inscription a bien été enregistrée.";
           // Redirection vers la page de connexion
           header("Location: index.php?action=login&success_message=".urlencode($success_message));
           exit();
@@ -41,7 +41,7 @@ function login() {
     try {
         // Vérification des données entrées par l'utilisateur
         if (!isset($_POST["email"]) || !isset($_POST["username"]) || !isset($_POST["password"])) {
-            throw new Exception("Veuillez remplir tous les champs.");
+            throw new Exception("Il faut remplir tous les champs.");
         }
 
         $email = $_POST["email"];
@@ -236,7 +236,6 @@ function updateSubtopic() {
 }
 
 
-
 function viewMessages() {
     try {
         if (!isset($_GET["subtopic_id"])) {
@@ -265,8 +264,6 @@ function viewMessages() {
         throw new Exception("Une erreur s'est produite : " . $e->getMessage());
     }
 }
-
-
 
 
 

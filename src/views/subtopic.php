@@ -38,24 +38,27 @@
 </form>
 </div>
 
-<?php foreach ($subtopics as $subtopic) : ?>
-    <li>
-        <?php echo $subtopic['title']; ?> (<?php echo $subtopic['topic_title']; ?>)
-        <form action="index.php?action=deleteSubtopic" method="post" style="display:inline;">
-            <input type="hidden" name="subtopic_id" value="<?php echo $subtopic['subtopic_id']; ?>">
-            <input type="submit" value="Supprimer">
-        </form>
-        <form action="index.php?action=updateSubtopic" method="post" style="display:inline;">
-            <input type="hidden" name="subtopic_id" value="<?php echo $subtopic['subtopic_id']; ?>">
-            <input type="text" name="title" value="<?php echo $subtopic['title']; ?>">
-            <input type="submit" value="Modifier">
-        </form>
-        <form method="post" action="index.php?action=viewMessages&subtopic_id=<?php echo urlencode($subtopic['subtopic_id']); ?>">
-            <input type="hidden" name="subtopic_id" value="<?php echo $subtopic['subtopic_id']; ?>">
-            <input type="submit" name="view_messages" value="Voir les messages">
-        </form>
-    </li>
-<?php endforeach; ?>
+<h2>Liste des sous sujets crées</h2>
+<div class="subtopics-container">
+    <?php foreach ($subtopics as $subtopic) : ?>
+        <div class="subtopic">
+            <?php echo $subtopic['title']; ?> (<?php echo $subtopic['topic_title']; ?>)
+            <form action="index.php?action=deleteSubtopic" method="post">
+                <input type="hidden" name="subtopic_id" value="<?php echo $subtopic['subtopic_id']; ?>">
+                <input type="submit" class="submit_form" value="Supprimer">
+            </form>
+            <form action="index.php?action=updateSubtopic" method="post">
+                <input type="hidden" name="subtopic_id" value="<?php echo $subtopic['subtopic_id']; ?>">
+                <input type="text" name="title" value="<?php echo $subtopic['title']; ?>">
+                <input type="submit" class="submit_form" value="Modifier">
+            </form>
+            <form method="post" action="index.php?action=viewMessages&subtopic_id=<?php echo $subtopic['subtopic_id']; ?>">
+                <input type="hidden" name="subtopic_id" value="<?php echo $subtopic['subtopic_id']; ?>">
+                <input type="submit" name="view_messages" class="submit_form_view" value="Voir les messages">
+            </form>
+        </div>
+    <?php endforeach; ?>
+</div>
 
 
 

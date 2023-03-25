@@ -8,6 +8,7 @@
     <title>Inscription - The Purrfect Place</title>
 </head>
 <body>
+  
 <?php require "header.php"; ?>
 <h1>Inscris toi !</h1>
 <div class="container">
@@ -19,5 +20,6 @@
   </form>
 </div>
 
+<?php require "footer.php"; ?>
 </body>
 </html>

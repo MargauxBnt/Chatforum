@@ -3,6 +3,12 @@
     src: url('../fonts/Shrikhand-Regular.ttf');
 }
 
+body{
+    background-image: url(../images/login.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
 h1{
     font-family: 'Shrikhand', sans-serif;
     text-align: center;
@@ -45,12 +51,6 @@ h1{
 
 #home{
     width: 50px;
-}
-
-body{
-    background-image: url(../images/login.png);
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
 .success {

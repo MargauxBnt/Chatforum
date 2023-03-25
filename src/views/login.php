@@ -22,5 +22,6 @@
     <input type="submit" class="submit_form" value="Se connecter">
   </form>
 </div>
+<?php require "footer.php"; ?>
 </body>
 </html>

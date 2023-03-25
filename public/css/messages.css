@@ -1,0 +1,45 @@
+body{
+    background-image: url(../images/messages.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h1, h2{
+    font-family: 'Shrikhand', sans-serif;
+    text-align: center;
+    margin-top: 30px;
+    color:black;
+}
+
+h2{
+    margin: 40px 0;
+    font-size: 25px;
+}
+
+.container{
+    background-color: rgba(255, 255, 255, 0.492);
+    height: 20vh;
+    width: 50vw;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-left: 25vw;
+    border: solid 1px black;
+    align-items: center;
+}
+
+.submit_form{
+    background-color: rgb(255, 88, 88);
+    color: rgb(255, 255, 255);
+    border: solid rgb(255, 255, 255) 1px;
+    border-radius: 25px;
+    width: 10vw;
+    height: 5vh;
+    margin-left: -5px;
+}
+
+.submit_form:hover{
+    background-color: rgb(150, 150, 150);
+    cursor: pointer;
+}

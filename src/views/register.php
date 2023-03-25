@@ -13,12 +13,13 @@
 <h1>Inscris toi !</h1>
 <div class="container">
   <form method="POST" action="./index.php?action=register">
-    <input type="text" name="username" id="username" required placeholder="Nom d'utilisateur :"><label for="username"></label><br>
-    <input type="password" name="password" id="password" required placeholder="Mot de passe :"><label for="password"></label><br>
-    <input type="email" name="email" id="email" required placeholder="Email :"><label for="email"></label><br>
+    <input type="text" name="username" id="username" required placeholder="Nom d'utilisateur :" class="form-input"><label for="username"></label><br>
+    <input type="password" name="password" id="password" required placeholder="Mot de passe :" class="form-input"><label for="password"></label><br>
+    <input type="email" name="email" id="email" required placeholder="Email :" class="form-input"><label for="email"></label><br>
     <input type="submit" class="submit_form" value="S'inscrire">
   </form>
 </div>
+
 
 <?php require "footer.php"; ?>
 </body>

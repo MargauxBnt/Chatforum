@@ -1,12 +1,10 @@
 <?php
 
-
 require_once "./src/models/modelUser.php";
 require_once "./src/models/model.php";
 
 function register() {
         try {
-            // Vérification des données entrées par l'utilisateur
             if (!isset($_POST["username"]) || !isset($_POST["email"]) || !isset($_POST["password"])) {
                 throw new Exception("Il faut remplir tous les champs");
             }
@@ -15,15 +13,11 @@ function register() {
             $email = $_POST["email"];
             $password = $_POST["password"];
 
-             // Connexion à la base de données
             $db = connectDB();
-
             // Création d'une instance de la classe UserModel
             $userModel = new UserModel($db);
-
             // Création de l'utilisateur
             $userModel->createUser($username, $email, $password);
-
             // Message de succès d'inscription
           $success_message = "Ton inscription a bien été enregistrée.";
           // Redirection vers la page de connexion
@@ -39,7 +33,6 @@ function register() {
 
 function login() {
     try {
-        // Vérification des données entrées par l'utilisateur
         if (!isset($_POST["email"]) || !isset($_POST["username"]) || !isset($_POST["password"])) {
             throw new Exception("Il faut remplir tous les champs.");
         }
@@ -88,10 +81,8 @@ function login() {
 }
 
 
-
 function updateProfile() {
     try {
-        // Vérification des données entrées par l'utilisateur
         if (!isset($_POST["username"]) || !isset($_POST["email"]) || !isset($_POST["password"])) {
             throw new Exception("Il faut remplir tous les champs.");
         }
@@ -116,7 +107,7 @@ function updateProfile() {
         // Affichage du message d'erreur dans la vue de profil
         require_once "./src/views/profile.php";
         // Lancement d'une nouvelle exception avec un message d'erreur détaillé
-        throw new Exception("Une erreur s'est produite : " . $e->getMessage());
+        throw new Exception($e->getMessage());
     }
 }
 
@@ -264,8 +255,6 @@ function viewMessages() {
         throw new Exception("Une erreur s'est produite : " . $e->getMessage());
     }
 }
-
-
 
 
 function home() {

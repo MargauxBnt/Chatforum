@@ -4,7 +4,7 @@
 }
 
 body{
-    background-image: url(../images/register3.png);
+    background-image: url(../images/register.png);
     background-repeat: no-repeat;
     background-size: contain;
 }
@@ -36,6 +36,11 @@ h1{
     cursor: pointer;
 }
 
+.form-input {
+    margin-bottom: 20px; 
+}
+  
+
 .container{
     background-color: rgba(255, 255, 255, 0.492);
     height: 70vh;
@@ -47,10 +52,9 @@ h1{
     margin-left: 25vw;
     border: solid 1px black;
     align-items: center;
+    text-align: center;
 }
 
-#home{
-    width: 50px;
-}
+
 
 

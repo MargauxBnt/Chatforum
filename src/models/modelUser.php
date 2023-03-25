@@ -132,10 +132,10 @@ public function updateUser($userId, $username, $email, $password) {
             throw new Exception("Erreur lors de la mise à jour de l'utilisateur.");
         }
 
-                // Mettre à jour la variable de session "username" si la modification concerne l'utilisateur connecté
-                if ($_SESSION["user_id"] == $userId) {
-                    $_SESSION["username"] = $username;
-                }
+        // Mettre à jour la variable de session "username" si la modification concerne l'utilisateur connecté
+        if ($_SESSION["user_id"] == $userId) {
+        $_SESSION["username"] = $username;
+        }
                 
     } catch (Exception $e) {
         throw new Exception($e->getMessage());

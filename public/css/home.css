@@ -51,14 +51,14 @@
 }
 
 .float p {
+  font-family: 'Red Hat Display', sans-serif; 
   font-size: 1rem;
   font-weight: 500;
   display: block;
   margin-top: 20px;
-  margin-left : 120px;
   margin-bottom: 0; 
-  line-height: 1; 
-  font-family: 'Red Hat Display', sans-serif; 
+  margin-left: 120px; 
+  align-self: flex-start;
 }
 
 

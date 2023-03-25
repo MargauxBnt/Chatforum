@@ -16,14 +16,11 @@
     <h1>Connecte-toi !</h1>
     <div class="container">
   <form method="POST" action="./index.php?action=login">
-    <label for="username">Nom d'utilisateur:</label>
-    <input type="text" name="username" required><br>
-    <label for="password">Mot de passe:</label>
-    <input type="password" name="password" required><br>
-    <label for="email">Adresse e-mail:</label>
-    <input type="email" name="email" required><br>
+    <input type="text" name="username" id="username" required placeholder="Nom d'utilisateur :"><label for="username"></label><br>
+    <input type="password" name="password" id="password" required placeholder="Mot de passe :"><label for="password"></label><br>
+    <input type="email" name="email" id="email" required placeholder="Email :"><label for="email"></label><br>
     <input type="submit" class="submit_form" value="Se connecter">
   </form>
-  </div>
+</div>
 </body>
 </html>

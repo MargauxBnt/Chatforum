@@ -93,7 +93,7 @@ function updateProfile() {
     try {
         // Vérification des données entrées par l'utilisateur
         if (!isset($_POST["username"]) || !isset($_POST["email"]) || !isset($_POST["password"])) {
-            throw new Exception("Veuillez remplir tous les champs.");
+            throw new Exception("Il faut remplir tous les champs.");
         }
 
         $userId = $_SESSION["user_id"];
@@ -136,11 +136,11 @@ function subtopic() {
         if($_SERVER ["REQUEST_METHOD"] == "POST"){
             // Vérification de l'existence de l'utilisateur
             if (!isset($_SESSION["user_id"])) {
-                throw new Exception("Vous devez être connecté pour créer un sujet.");
+                throw new Exception("Tu dois être connecté(e) pour créer un sujet.");
             }
             // Vérification des données entrées par l'utilisateur
             if (!isset($_POST["title"]) || !isset($_POST["topic_id"])) {
-                throw new Exception("Veuillez remplir tous les champs.");
+                throw new Exception("Il faut remplir tous les champs.");
             }
             $title = $_POST["title"];
             $topic_id = $_POST["topic_id"];
@@ -172,7 +172,7 @@ function deleteSubtopic() {
 
         // Vérification de l'existence de l'utilisateur
         if (!isset($_SESSION["user_id"])) {
-            throw new Exception("Vous devez être connecté pour supprimer un sujet.");
+            throw new Exception("Tu dois être connecté(e) pour supprimer un sujet.");
         }
 
         // Récupération de l'ID du subtopic à supprimer
@@ -205,12 +205,12 @@ function updateSubtopic() {
 
         // Vérification de l'existence de l'utilisateur
         if (!isset($_SESSION["user_id"])) {
-            throw new Exception("Vous devez être connecté pour modifier un sujet.");
+            throw new Exception("Tu dois être connecté(e) pour modifier un sujet.");
         }
 
         // Vérification des données entrées par l'utilisateur
         if (!isset($_POST["title"]) || !isset($_POST["subtopic_id"])) {
-            throw new Exception("Veuillez remplir tous les champs.");
+            throw new Exception("Il faut remplir tous les champs.");
         }
         $title = $_POST["title"];
         $subtopic_id = $_POST["subtopic_id"];

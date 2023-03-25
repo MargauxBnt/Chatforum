@@ -171,6 +171,13 @@ class PostModel {
         return $query->fetchAll();
     }
     
+    public function getSubtopicById($subtopicId) {
+        $sql = "SELECT subtopics.*, topics.title AS topic_title FROM subtopics JOIN topics ON subtopics.topic_id = topics.topic_id WHERE subtopic_id = ?";
+        $query = $this->db->prepare($sql);
+        $query->execute([$subtopicId]);
+        return $query->fetch();
+    }
+    
 
     public function addSubtopic($title, $user_id, $topic_id) {
         $stmt = $this->db->prepare("INSERT INTO subtopics (title, user_id, topic_id) VALUES (:title, :user_id, :topic_id)");

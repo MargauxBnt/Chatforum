@@ -26,7 +26,6 @@ try {
        home();
     }
   } catch (Exception $e) {
-    // Gérer l'erreur ici
     echo "Une erreur est survenue : " . $e->getMessage();
   }
   

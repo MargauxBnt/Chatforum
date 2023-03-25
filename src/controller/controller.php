@@ -247,7 +247,7 @@ function viewMessages() {
         $postModel = new PostModel($db);
 
         // Vérification que le sous-sujet existe dans la base de données
-        $subtopic = $postModel->getSubtopicsByUserId($subtopic_id);
+        $subtopic = $postModel->getSubtopicById($subtopic_id);
         if (!$subtopic) {
             throw new Exception("Sous-sujet introuvable.");
         }
@@ -255,12 +255,17 @@ function viewMessages() {
         // Récupération des messages associés au sous-sujet
         $messages = $postModel->getMessages($subtopic_id);
 
+        // Passer le titre du sous-sujet à la vue
+        $subtopic_title = $subtopic['title'];
+        $topic_title = $subtopic['topic_title'];
+
         require_once ("./src/views/messages.php");
     } catch (Exception $e) {
         // Lancement d'une nouvelle exception avec un message d'erreur détaillé
         throw new Exception("Une erreur s'est produite : " . $e->getMessage());
     }
 }
+
 
 
 

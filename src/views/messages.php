@@ -7,7 +7,8 @@
     <title>Les messages de mon sujet</title>
 </head>
 <body>
-<h1>Messages pour le sujet : <?php echo $subtopic["title"]; ?></h1>
+<h1>Messages pour le sous-sujet "<?php echo $subtopic_title; ?>" du sujet "<?php echo $topic_title; ?>"</h1>
+
 
 <ul>
     <?php foreach ($messages as $message): ?>
@@ -41,6 +42,9 @@
             </form>
         </li>
     <?php endforeach; ?>
+
+    <a href="index.php?action=subtopic">Retour</a>
+
 </ul>
 </body>
 </html>

@@ -50,9 +50,9 @@
             <input type="text" name="title" value="<?php echo $subtopic['title']; ?>">
             <input type="submit" value="Modifier">
         </form>
-        <form method="post" action="index.php?action=viewMessages&subtopic_id=<?php echo $subtopic['subtopic_id']; ?>">
+        <form method="post" action="index.php?action=viewMessages&subtopic_id=<?php echo urlencode($subtopic['subtopic_id']); ?>">
             <input type="hidden" name="subtopic_id" value="<?php echo $subtopic['subtopic_id']; ?>">
-            <input type="submit" name="view_messages" value="View Messages">
+            <input type="submit" name="view_messages" value="Voir les messages">
         </form>
     </li>
 <?php endforeach; ?>

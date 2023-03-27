@@ -9,47 +9,40 @@
 </head>
 <body>
     <?php require "header.php"; ?>
-    <h1>Messages pour le sous-sujet "<?php echo $subtopic_title; ?>" <br>
-    (<?php echo $topic_title; ?>)</h1>
+    <h1>Messages pour le sous-sujet "<?php echo $subtopic_title; ?>"<br>
+(<?php echo $topic_title; ?>)</h1>
 
-
-<ul>
-    <?php foreach ($messages as $message): ?>
-        <li>
-            <strong><?php echo $message["username"]; ?>:</strong>
-            <?php echo $message["message"]; ?>
-        </li>
-    <?php endforeach; ?>
-</ul>
+<?php if(empty($messages)): ?>
+    <p>Aucun message pour le moment</p>
+<?php else: ?>
+    <ul>
+        <?php foreach ($messages as $message): ?>
+            <li>
+                <strong><?php echo $message["username"]; ?>:</strong>
+                <?php echo $message["message"]; ?>
+                <form action="index.php?action=addMessage" method="post">
+                    <input type="hidden" name="subtopic_id" value="<?php echo $subtopic_id; ?>">
+                    <input type="hidden" name="parent_id" value="<?php echo $message["id"]; ?>">
+                    <textarea name="message"></textarea>
+                    <input type="submit" class="submit_form" value="Envoyer">
+                </form>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
 
 <h2>Ajouter un message</h2>
 <div class="container">
-<form action="index.php?action=addMessage" method="post">
-    <input type="hidden" name="subtopic_id" value="<?php echo $subtopic_id; ?>">
-    <textarea name="message"></textarea>
-    <button type="submit">Envoyer</button>
-</form>
+    <form action="index.php?action=addMessage" method="post">
+        <input type="hidden" name="subtopic_id" value="<?php echo $subtopic_id; ?>">
+        <textarea name="message"></textarea>
+        <button type="submit">Envoyer</button>
+    </form>
 </div>
 
-<h2>Répondre à un message</h2>
-<div class="container">
-<ul>
-    <?php foreach ($messages as $message): ?>
-        <li>
-            <strong><?php echo $message["username"]; ?>:</strong>
-            <?php echo $message["message"]; ?>
-            <form action="index.php?action=addMessage" method="post">
-                <input type="hidden" name="subtopic_id" value="<?php echo $subtopic_id; ?>">
-                <input type="hidden" name="parent_id" value="<?php echo $message["id"]; ?>">
-                <textarea name="message"></textarea>
-                <input type="submit" class="submit_form" value="Envoyer">
-            </form>
-        </li>
-    <?php endforeach; ?>
-    </div>
-    <a href="index.php?action=subtopic">Retour</a>
+<a href="index.php?action=subtopic">Retour</a>
 
-</ul>
+
 
 </body>
 </html>

@@ -227,20 +227,43 @@ function updateSubtopic() {
 }
 
 
+/*function viewMessages() {
+    try {
+        $db = connectDB();
+        $postModel = new PostModel($db);
+
+        // Récupération de l'identifiant du sous-sujet à partir de la variable superglobale $_GET
+        $subtopic_id = $_GET["subtopic_id"];
+        
+
+        // Récupération des messages du subtopic
+        $messages = $postModel->getMessages($subtopic_id);
+
+        // Récupération du titre du subtopic et du titre du topic parent
+        $subtopic = $postModel->getSubtopicById($subtopic_id);
+        $subtopic_title = $subtopic["title"];
+        $topic = $postModel->getTopics($subtopic["topic_id"]);
+        $topic_title = $topic["title"];
+
+        // Affichage de la vue des messages
+        require("./src/views/messages.php");
+
+    } catch (Exception $e) {
+        // Affichage de l'erreur
+        $error = $e->getMessage();
+        require("./src/views/subtopic.php");
+    }
+}*/
+
+
 function viewMessages() {
     try {
-        if (!isset($_GET["subtopic_id"])) {
-            throw new Exception("ID de sous-sujet manquant.");
-        }
         $subtopic_id = $_GET["subtopic_id"];
         $db = connectDB();
         $postModel = new PostModel($db);
 
         // Vérification que le sous-sujet existe dans la base de données
         $subtopic = $postModel->getSubtopicById($subtopic_id);
-        if (!$subtopic) {
-            throw new Exception("Sous-sujet introuvable.");
-        }
 
         // Récupération des messages associés au sous-sujet
         $messages = $postModel->getMessages($subtopic_id);
@@ -255,6 +278,7 @@ function viewMessages() {
         throw new Exception("Une erreur s'est produite : " . $e->getMessage());
     }
 }
+
 
 
 function home() {

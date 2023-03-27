@@ -47,7 +47,6 @@
 
 
 
-
 <h2>Ajouter un message</h2>
 <div class="container">
     <form action="index.php?action=addMessage" method="post">

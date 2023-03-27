@@ -22,6 +22,8 @@ try {
         updateSubtopic();
     } elseif (isset($_GET['action']) && $_GET['action'] == "viewMessages") {
         viewMessages();
+    } elseif (isset($_GET['action']) && $_GET['action'] == "addMessage") {
+        addMessage();
     } else {
        home();
     }

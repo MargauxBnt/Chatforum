@@ -227,35 +227,6 @@ function updateSubtopic() {
 }
 
 
-/*function viewMessages() {
-    try {
-        $db = connectDB();
-        $postModel = new PostModel($db);
-
-        // Récupération de l'identifiant du sous-sujet à partir de la variable superglobale $_GET
-        $subtopic_id = $_GET["subtopic_id"];
-        
-
-        // Récupération des messages du subtopic
-        $messages = $postModel->getMessages($subtopic_id);
-
-        // Récupération du titre du subtopic et du titre du topic parent
-        $subtopic = $postModel->getSubtopicById($subtopic_id);
-        $subtopic_title = $subtopic["title"];
-        $topic = $postModel->getTopics($subtopic["topic_id"]);
-        $topic_title = $topic["title"];
-
-        // Affichage de la vue des messages
-        require("./src/views/messages.php");
-
-    } catch (Exception $e) {
-        // Affichage de l'erreur
-        $error = $e->getMessage();
-        require("./src/views/subtopic.php");
-    }
-}*/
-
-
 function viewMessages() {
     try {
         $subtopic_id = $_GET["subtopic_id"];
@@ -273,6 +244,33 @@ function viewMessages() {
         $topic_title = $subtopic['topic_title'];
 
         require_once ("./src/views/messages.php");
+    } catch (Exception $e) {
+        // Lancement d'une nouvelle exception avec un message d'erreur détaillé
+        throw new Exception("Une erreur s'est produite : " . $e->getMessage());
+    }
+}
+
+
+function addMessage() {
+    try {
+        $db = connectDB();
+        $postModel = new PostModel($db);
+
+        // Récupération des données du formulaire
+        $message = $_POST["message"];
+        $user_id = $_SESSION["user_id"];
+        $subtopic_id = $_POST["subtopic_id"];
+
+        // Récupération de l'identifiant du topic associé au subtopic
+        $subtopic = $postModel->getSubtopicById($subtopic_id);
+        $topic_id = $subtopic["topic_id"];
+
+        // Ajout du message à la base de données
+        $postModel->addMessage($message, $user_id, $subtopic_id, $topic_id);
+
+        // Redirection vers la page des messages
+        header("Location: index.php?action=viewMessages&subtopic_id=" . $subtopic['subtopic_id']);
+        exit;
     } catch (Exception $e) {
         // Lancement d'une nouvelle exception avec un message d'erreur détaillé
         throw new Exception("Une erreur s'est produite : " . $e->getMessage());

@@ -212,14 +212,10 @@ class PostModel {
     
     
     public function addMessage($message, $user_id, $subtopic_id, $topic_id) {
-        $stmt = $this->db->prepare("INSERT INTO messages (message, user_id, subtopic_id, topic_id) VALUES (:message, :user_id, :subtopic_id, :topic_id)");
-        $stmt->bindValue(":message", $message);
-        $stmt->bindValue(":user_id", $user_id);
-        $stmt->bindValue(":subtopic_id", $subtopic_id);
-        $stmt->bindValue(":topic_id", $topic_id);
-        $stmt->execute();
+        $stmt = $this->db->prepare("INSERT INTO messages (message, user_id, subtopic_id, topic_id) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$message, $user_id, $subtopic_id, $topic_id]);
         return $this->db->lastInsertId();
-    }
+    }    
 
     public function getMessageById($message_id) {
         $stmt = $this->db->prepare("SELECT messages.*, users.username FROM messages INNER JOIN users ON messages.user_id = users.user_id WHERE message_id = :message_id");

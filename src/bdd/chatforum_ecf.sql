@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 24 mars 2023 à 00:54
+-- Généré le : lun. 27 mars 2023 à 19:11
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -31,15 +31,31 @@ DROP TABLE IF EXISTS `messages`;
 CREATE TABLE IF NOT EXISTS `messages` (
   `message_id` int NOT NULL AUTO_INCREMENT,
   `message` text NOT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `user_id` int NOT NULL,
   `subtopic_id` int NOT NULL,
   `topic_id` int NOT NULL,
+  `parent_id` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`message_id`),
   KEY `user_id` (`user_id`),
   KEY `subtopic_id` (`subtopic_id`),
   KEY `topic_id` (`topic_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+--
+-- Structure de la table `replies`
+--
+
+DROP TABLE IF EXISTS `replies`;
+CREATE TABLE IF NOT EXISTS `replies` (
+  `reply_id` int NOT NULL AUTO_INCREMENT,
+  `parent_id` int NOT NULL,
+  `message_id` int NOT NULL,
+  PRIMARY KEY (`reply_id`),
+  KEY `parent_id` (`parent_id`),
+  KEY `message_id` (`message_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -59,7 +75,26 @@ CREATE TABLE IF NOT EXISTS `subtopics` (
   PRIMARY KEY (`subtopic_id`),
   KEY `user_id` (`user_id`),
   KEY `topic_id` (`topic_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `subtopics`
+--
+
+INSERT INTO `subtopics` (`subtopic_id`, `title`, `created_at`, `updated_at`, `user_id`, `topic_id`) VALUES
+(3, 'Les cartons IKEA', '2023-03-24 15:59:34', '2023-03-24 15:59:34', 16, 4),
+(4, 'Ils puent !', '2023-03-24 16:00:40', '2023-03-27 07:39:13', 16, 6),
+(6, 'Nos relations', '2023-03-24 16:05:35', '2023-03-24 16:05:35', 16, 5),
+(7, 'Souris & apéritifs', '2023-03-24 16:08:52', '2023-03-25 02:55:32', 16, 3),
+(8, 'Les placards', '2023-03-24 16:09:27', '2023-03-24 16:09:27', 16, 4),
+(9, 'Embuscade sur les quais du Rhône', '2023-03-24 16:17:41', '2023-03-24 16:17:41', 16, 6),
+(11, 'Paté ou croquettes ??', '2023-03-24 17:44:39', '2023-03-25 03:02:57', 16, 2),
+(12, 'Les relous', '2023-03-24 17:58:56', '2023-03-24 17:58:56', 16, 5),
+(13, 'La meilleure planque pour vous ?', '2023-03-24 18:05:57', '2023-03-24 18:05:57', 16, 4),
+(15, 'Manger le poisson du voisin, bonne ou mauvaise idée ?', '2023-03-24 18:33:46', '2023-03-24 18:33:46', 16, 3),
+(16, 'Comment les contrer?', '2023-03-24 19:09:56', '2023-03-24 19:09:56', 16, 6),
+(21, 'Comment avoir les poils soyeux ?', '2023-03-24 21:36:03', '2023-03-24 21:59:04', 16, 1),
+(22, 'Peur du petit qui cours partout', '2023-03-27 07:41:51', '2023-03-27 07:41:51', 16, 5);
 
 -- --------------------------------------------------------
 
@@ -102,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `users`
@@ -134,7 +169,20 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `email`, `created_at`, `
 (25, 'MissMoumoune', '$2y$10$pHN0v0MoHTrzKPexv.5oWObN4bmZd73ZvxEh23x95pqmrlidfUkgu', 'missmoumoune@gmail.com', '2023-03-23 18:29:58', '2023-03-23 18:29:58'),
 (26, 'KitKat', '$2y$10$TBXoc32ctZdypFBPpgpJ1uEw0lqazsSDbaisor177gbIh1uR/8342', 'kitkat@gmail.com', '2023-03-23 21:27:04', '2023-03-23 21:27:04'),
 (27, 'Freshdu13', '$2y$10$.4X7XuyAENYU2L8pwduEYuTKV/NoFLF0BxyBhx25BEGqvdiQutR6O', 'fresh@gmail.com', '2023-03-23 21:44:13', '2023-03-23 22:56:36'),
-(28, 'Pomme', '$2y$10$WAJ46NtMUwXtsxb5EeFKgOdmzu22GtrgaoKqPK86iNkfsbNqxQol.', 'pomme@hotmail.fr', '2023-03-23 21:46:55', '2023-03-23 21:46:55');
+(28, 'Pomme', '$2y$10$WAJ46NtMUwXtsxb5EeFKgOdmzu22GtrgaoKqPK86iNkfsbNqxQol.', 'pomme@hotmail.fr', '2023-03-23 21:46:55', '2023-03-23 21:46:55'),
+(29, 'Sacha', '$2y$10$U4nQvf7btgea3nW/EpQq8OpAFAHp2cPHt1Nvfw8Kgj2.hJyeD29Ha', 'sacha@gmail.com', '2023-03-25 02:01:02', '2023-03-25 02:01:02'),
+(30, 'Mefi', '$2y$10$2ECB62oAq0LjlCzPRd3xfeNITI.m.EyLruO1u0xBR1STZ1l1EwUse', 'mefi@gmail.com', '2023-03-25 02:02:48', '2023-03-25 02:02:48');
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `replies`
+--
+ALTER TABLE `replies`
+  ADD CONSTRAINT `replies_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `messages` (`message_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `replies_ibfk_2` FOREIGN KEY (`message_id`) REFERENCES `messages` (`message_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

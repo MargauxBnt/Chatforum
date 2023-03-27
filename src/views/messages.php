@@ -24,7 +24,7 @@
                     <input type="hidden" name="subtopic_id" value="<?php echo $subtopic_id; ?>">
                     <input type="hidden" name="parent_id" value="<?php echo $message["message_id"]; ?>">
                     <textarea name="message"></textarea>
-                    <input type="submit" class="submit_form" value="Envoyer">
+                    <input type="submit" class="submit_form" value="Répondre">
                 </form>
             </li>
         <?php endforeach; ?>

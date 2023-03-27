@@ -224,4 +224,14 @@ class PostModel {
         $message = $stmt->fetch(PDO::FETCH_ASSOC);
         return $message;
     }
+
+    public function addReply($message, $user_id, $subtopic_id, $topic_id, $parent_id) {
+        $stmt = $this->db->prepare("INSERT INTO messages (message, user_id, subtopic_id, topic_id, parent_id) VALUES (:message, :user_id, :subtopic_id, :topic_id, :parent_id)");
+        $stmt->bindParam(':message', $message);
+        $stmt->bindParam(':user_id', $user_id);
+        $stmt->bindParam(':subtopic_id', $subtopic_id);
+        $stmt->bindParam(':topic_id', $topic_id);
+        $stmt->bindParam(':parent_id', $parent_id);
+        $stmt->execute();
+    }    
 }

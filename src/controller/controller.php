@@ -251,6 +251,7 @@ function viewMessages() {
 }
 
 
+
 function addMessage() {
     try {
         $db = connectDB();
@@ -260,13 +261,18 @@ function addMessage() {
         $message = $_POST["message"];
         $user_id = $_SESSION["user_id"];
         $subtopic_id = $_POST["subtopic_id"];
+        $parent_id = isset($_POST["parent_id"]) ? $_POST["parent_id"] : null;
 
         // Récupération de l'identifiant du topic associé au subtopic
         $subtopic = $postModel->getSubtopicById($subtopic_id);
         $topic_id = $subtopic["topic_id"];
 
-        // Ajout du message à la base de données
-        $postModel->addMessage($message, $user_id, $subtopic_id, $topic_id);
+        // Ajout du message ou de la réponse à la base de données
+        if ($parent_id) {
+            $postModel->addReply($message, $user_id, $subtopic_id, $topic_id, $parent_id);
+        } else {
+            $postModel->addMessage($message, $user_id, $subtopic_id, $topic_id);
+        }
 
         // Redirection vers la page des messages
         header("Location: index.php?action=viewMessages&subtopic_id=" . $subtopic['subtopic_id']);
@@ -276,6 +282,7 @@ function addMessage() {
         throw new Exception("Une erreur s'est produite : " . $e->getMessage());
     }
 }
+
 
 
 

@@ -12,7 +12,7 @@
     <h1>Messages pour le sous-sujet "<?php echo $subtopic_title; ?>"<br>
 (<?php echo $topic_title; ?>)</h1>
 
-<?php if(empty($messages)): ?>
+<?php if (empty($messages)): ?>
     <p>Aucun message pour le moment</p>
 <?php else: ?>
     <ul>
@@ -22,7 +22,7 @@
                 <?php echo $message["message"]; ?>
                 <form action="index.php?action=addMessage" method="post">
                     <input type="hidden" name="subtopic_id" value="<?php echo $subtopic_id; ?>">
-                    <input type="hidden" name="parent_id" value="<?php echo $message["id"]; ?>">
+                    <input type="hidden" name="parent_id" value="<?php echo $message["message_id"]; ?>">
                     <textarea name="message"></textarea>
                     <input type="submit" class="submit_form" value="Envoyer">
                 </form>
@@ -30,6 +30,7 @@
         <?php endforeach; ?>
     </ul>
 <?php endif; ?>
+
 
 <h2>Ajouter un message</h2>
 <div class="container">

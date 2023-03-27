@@ -204,12 +204,13 @@ class PostModel {
     }
 
     public function getMessages($subtopic_id) {
-        $stmt = $this->db->prepare("SELECT messages.*, users.username FROM messages INNER JOIN users ON messages.user_id = users.user_id WHERE subtopic_id = :subtopic_id ORDER BY created_at ASC");
+        $stmt = $this->db->prepare("SELECT messages.*, users.username FROM messages JOIN users ON messages.user_id = users.user_id WHERE subtopic_id = :subtopic_id ORDER BY created_at DESC");
         $stmt->bindValue(":subtopic_id", $subtopic_id);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
+    
+    
     public function addMessage($message, $user_id, $subtopic_id, $topic_id) {
         $stmt = $this->db->prepare("INSERT INTO messages (message, user_id, subtopic_id, topic_id) VALUES (:message, :user_id, :subtopic_id, :topic_id)");
         $stmt->bindValue(":message", $message);

@@ -277,20 +277,13 @@ function addMessage() {
             $reply_id = $postModel->addMessage($message, $user_id, $subtopic_id, $topic_id);
         }
 
-        // Récupération des réponses liées au message parent
-        $replies = $postModel->getRepliesByParentId($message["message_id"]);
-
         // Redirection vers la page des messages
         header("Location: index.php?action=viewMessages&subtopic_id=" . $subtopic['subtopic_id']);
         exit;
     } catch (Exception $e) {
-        // Lancement d'une nouvelle exception avec un message d'erreur détaillé
         throw new Exception("Une erreur s'est produite : " . $e->getMessage());
     }
 }
-
-
-
 
 
 function home() {

@@ -237,7 +237,8 @@ function viewMessages() {
         $subtopic = $postModel->getSubtopicById($subtopic_id);
 
         // Récupération des messages associés au sous-sujet
-        $messages = $postModel->getMessages($subtopic_id);
+        //$messages = $postModel->getMessages($subtopic_id);
+        $messages = $postModel->getMessagesBySubtopicId($subtopic_id);
 
         // Passer le titre du sous-sujet à la vue
         $subtopic_title = $subtopic['title'];
@@ -269,10 +270,15 @@ function addMessage() {
 
         // Ajout du message ou de la réponse à la base de données
         if ($parent_id) {
-            $postModel->addReply($message, $user_id, $subtopic_id, $topic_id, $parent_id);
+            // Si un parent_id est présent dans le formulaire, on ajoute une réponse à un message existant
+            $reply_id = $postModel->addReply($message, $user_id, $subtopic_id, $topic_id, $parent_id);
         } else {
-            $postModel->addMessage($message, $user_id, $subtopic_id, $topic_id);
+            // Sinon, on ajoute un nouveau message
+            $reply_id = $postModel->addMessage($message, $user_id, $subtopic_id, $topic_id);
         }
+
+        // Récupération des réponses liées au message parent
+        $replies = $postModel->getRepliesByParentId($message["message_id"]);
 
         // Redirection vers la page des messages
         header("Location: index.php?action=viewMessages&subtopic_id=" . $subtopic['subtopic_id']);
@@ -282,6 +288,7 @@ function addMessage() {
         throw new Exception("Une erreur s'est produite : " . $e->getMessage());
     }
 }
+
 
 
 

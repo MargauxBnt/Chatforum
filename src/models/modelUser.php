@@ -234,4 +234,26 @@ class PostModel {
         $stmt->bindParam(':parent_id', $parent_id);
         $stmt->execute();
     }    
+
+    public function getRepliesByParentId($parent_id) {
+        // Préparation de la requête SQL
+        $query = "SELECT * FROM messages WHERE parent_id = :parent_id ORDER BY created_at ASC";
+        $statement = $this->db->prepare($query);
+        $statement->bindParam(":parent_id", $parent_id, PDO::PARAM_INT);
+    
+        // Exécution de la requête
+        $statement->execute();
+    
+        // Récupération des résultats
+        $replies = $statement->fetchAll(PDO::FETCH_ASSOC);
+    
+        return $replies;
+    } 
+    
+    public function getMessagesBySubtopicId($subtopic_id) {
+        $stmt = $this->db->prepare("SELECT messages.*, users.username FROM messages JOIN users ON messages.user_id = users.user_id WHERE subtopic_id = :subtopic_id ORDER BY created_at DESC");
+        $stmt->bindValue(":subtopic_id", $subtopic_id);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }    
 }

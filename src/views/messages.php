@@ -24,12 +24,28 @@
                     <input type="hidden" name="subtopic_id" value="<?php echo $subtopic_id; ?>">
                     <input type="hidden" name="parent_id" value="<?php echo $message["message_id"]; ?>">
                     <textarea name="message"></textarea>
-                    <input type="submit" class="submit_form" value="Répondre">
+                    <input type="submit" class="submit_form" value="Envoyer">
                 </form>
+
+                <?php
+                // Affichage des réponses à ce message
+                $replies = $postModel->getRepliesByParentId($message["message_id"]);
+
+                if (!empty($replies)) {
+                    echo "<ul>";
+                    foreach ($replies as $reply) {
+                        echo "<li><strong>" . $reply["username"] . " a répondu :</strong> " . $reply["message"] . "</li>";
+                    }
+                    echo "</ul>";
+                }
+                ?>
+
             </li>
         <?php endforeach; ?>
     </ul>
 <?php endif; ?>
+
+
 
 
 <h2>Ajouter un message</h2>

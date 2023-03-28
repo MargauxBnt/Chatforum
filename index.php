@@ -24,6 +24,8 @@ try {
         viewMessages();
     } elseif (isset($_GET['action']) && $_GET['action'] == "addMessage") {
         addMessage();
+    } elseif (isset($_GET['action']) && $_GET['action'] == "addReply") {
+        addReply();
     } else {
        home();
     }

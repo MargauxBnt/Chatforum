@@ -201,88 +201,22 @@ class PostModel {
         $stmt = $this->db->prepare("DELETE FROM subtopics WHERE subtopic_id = :subtopic_id");
         $stmt->bindValue(":subtopic_id", $subtopic_id);
         return $stmt->execute();
-    }
-
-    public function getMessages($subtopic_id) {
-        $stmt = $this->db->prepare("SELECT messages.*, users.username FROM messages JOIN users ON messages.user_id = users.user_id WHERE subtopic_id = :subtopic_id ORDER BY created_at DESC");
-        $stmt->bindValue(":subtopic_id", $subtopic_id);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-    
+    } 
     
     public function addMessage($message, $user_id, $subtopic_id, $topic_id) {
         $stmt = $this->db->prepare("INSERT INTO messages (message, user_id, subtopic_id, topic_id) VALUES (?, ?, ?, ?)");
         $stmt->execute([$message, $user_id, $subtopic_id, $topic_id]);
         return $this->db->lastInsertId();
     }    
+ 
 
-    public function getMessageById($message_id) {
-        $stmt = $this->db->prepare("SELECT messages.*, users.username FROM messages INNER JOIN users ON messages.user_id = users.user_id WHERE message_id = :message_id");
+    public function getMessages($message_id) {
+        $stmt = $this->db->prepare("SELECT messages.*, users.username FROM messages JOIN users ON messages.user_id = users.user_id WHERE parent_id = :message_id ORDER BY created_at ASC");
         $stmt->bindValue(":message_id", $message_id);
         $stmt->execute();
-        $message = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $message;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    public function addReply($message, $user_id, $subtopic_id, $topic_id, $parent_id) {
-        $stmt = $this->db->prepare("INSERT INTO messages (message, user_id, subtopic_id, topic_id, parent_id) VALUES (:message, :user_id, :subtopic_id, :topic_id, :parent_id)");
-        $stmt->bindParam(':message', $message);
-        $stmt->bindParam(':user_id', $user_id);
-        $stmt->bindParam(':subtopic_id', $subtopic_id);
-        $stmt->bindParam(':topic_id', $topic_id);
-        $stmt->bindParam(':parent_id', $parent_id);
-        $stmt->execute();
-    }    
-
-    public function getRepliesByParentId($parent_id) {
-        // Préparation de la requête SQL
-        $query = "SELECT * FROM messages WHERE parent_id = :parent_id ORDER BY created_at ASC";
-        $statement = $this->db->prepare($query);
-        $statement->bindParam(":parent_id", $parent_id, PDO::PARAM_INT);
-    
-        // Exécution de la requête
-        $statement->execute();
-    
-        // Récupération des résultats
-        $replies = $statement->fetchAll(PDO::FETCH_ASSOC);
-    
-        return $replies;
-    }
-
-    /*public function getRepliesByParentIdAndUsername($parent_id, $username) {
-        // Préparation de la requête SQL
-        $query = "SELECT messages.*, users.username FROM messages JOIN users ON messages.user_id = users.user_id WHERE parent_id = :parent_id AND users.username = :username ORDER BY created_at ASC";
-        $statement = $this->db->prepare($query);
-        $statement->bindParam(":parent_id", $parent_id, PDO::PARAM_INT);
-        $statement->bindParam(":username", $username, PDO::PARAM_STR);
-    
-        // Exécution de la requête
-        $statement->execute();
-    
-        // Récupération des résultats
-        $replies = $statement->fetchAll(PDO::FETCH_ASSOC);
-    
-        return $replies;
-    }*/
-
-    /*public function getRepliesByParentId($parent_id, $username) {
-        // Préparation de la requête SQL
-        $query = "SELECT messages.*, users.username FROM messages INNER JOIN users ON messages.user_id = users.id WHERE messages.parent_id = :parent_id AND users.username = :username ORDER BY messages.created_at ASC";
-        $statement = $this->db->prepare($query);
-        $statement->bindParam(":parent_id", $parent_id, PDO::PARAM_INT);
-        $statement->bindParam(":username", $username, PDO::PARAM_STR);
-        
-        // Exécution de la requête
-        $statement->execute();
-        
-        // Récupération des résultats
-        $replies = $statement->fetchAll(PDO::FETCH_ASSOC);
-        
-        return $replies;
-    }*/
-    
-    
+     
     
     public function getMessagesBySubtopicId($subtopic_id) {
         $stmt = $this->db->prepare("SELECT messages.*, users.username FROM messages JOIN users ON messages.user_id = users.user_id WHERE subtopic_id = :subtopic_id ORDER BY created_at DESC");
@@ -290,4 +224,18 @@ class PostModel {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }    
+
+    public function addReply($parent_id, $message_id) {
+        $stmt = $this->db->prepare("INSERT INTO replies (parent_id, message_id) VALUES (?, ?)");
+        $stmt->execute([$parent_id, $message_id]);
+        return $this->db->lastInsertId();
+    }
+    
+    public function getReplies($parent_id) {
+        $stmt = $this->db->prepare("SELECT replies.*, users.username FROM replies JOIN messages ON replies.message_id = messages.message_id JOIN users ON messages.user_id = users.user_id WHERE replies.parent_id = :parent_id ORDER BY replies.created_at ASC");
+        $stmt->bindValue(":parent_id", $parent_id);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
 }

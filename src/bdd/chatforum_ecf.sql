@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 27 mars 2023 à 19:11
+-- Généré le : mar. 28 mars 2023 à 21:25
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -41,8 +41,10 @@ CREATE TABLE IF NOT EXISTS `messages` (
   KEY `user_id` (`user_id`),
   KEY `subtopic_id` (`subtopic_id`),
   KEY `topic_id` (`topic_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `replies`
@@ -52,6 +54,7 @@ DROP TABLE IF EXISTS `replies`;
 CREATE TABLE IF NOT EXISTS `replies` (
   `reply_id` int NOT NULL AUTO_INCREMENT,
   `parent_id` int NOT NULL,
+  `content` text NOT NULL,
   `message_id` int NOT NULL,
   PRIMARY KEY (`reply_id`),
   KEY `parent_id` (`parent_id`),
@@ -76,6 +79,9 @@ CREATE TABLE IF NOT EXISTS `subtopics` (
   KEY `user_id` (`user_id`),
   KEY `topic_id` (`topic_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `topics`
@@ -118,6 +124,10 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
+--
+-- Contraintes pour les tables déchargées
+--
 
 --
 -- Contraintes pour la table `replies`

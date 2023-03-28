@@ -251,8 +251,6 @@ function viewMessages() {
     }
 }
 
-
-
 function addMessage() {
     try {
         $db = connectDB();
@@ -262,28 +260,24 @@ function addMessage() {
         $message = $_POST["message"];
         $user_id = $_SESSION["user_id"];
         $subtopic_id = $_POST["subtopic_id"];
-        $parent_id = isset($_POST["parent_id"]) ? $_POST["parent_id"] : null;
 
         // Récupération de l'identifiant du topic associé au subtopic
         $subtopic = $postModel->getSubtopicById($subtopic_id);
         $topic_id = $subtopic["topic_id"];
 
-        // Ajout du message ou de la réponse à la base de données
-        if ($parent_id) {
-            // Si un parent_id est présent dans le formulaire, on ajoute une réponse à un message existant
-            $reply_id = $postModel->addReply($message, $user_id, $subtopic_id, $topic_id, $parent_id);
-        } else {
-            // Sinon, on ajoute un nouveau message
-            $reply_id = $postModel->addMessage($message, $user_id, $subtopic_id, $topic_id);
-        }
+        // Ajout du message à la base de données
+        $postModel->addMessage($message, $user_id, $subtopic_id, $topic_id);
 
         // Redirection vers la page des messages
         header("Location: index.php?action=viewMessages&subtopic_id=" . $subtopic['subtopic_id']);
         exit;
     } catch (Exception $e) {
+        // Lancement d'une nouvelle exception avec un message d'erreur détaillé
         throw new Exception("Une erreur s'est produite : " . $e->getMessage());
     }
 }
+
+
 
 
 function home() {

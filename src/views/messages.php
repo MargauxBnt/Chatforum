@@ -8,8 +8,8 @@
     <title>Les messages de mon sujet</title>
 </head>
 <body>
-    <?php require "header.php"; ?>
-    <h1>Messages pour le sous-sujet "<?php echo $subtopic_title; ?>"<br>
+<?php require "header.php"; ?>
+<h1>Messages pour le sous-sujet "<?php echo $subtopic_title; ?>"<br>
 (<?php echo $topic_title; ?>)</h1>
 
 <?php if (empty($messages)): ?>
@@ -20,7 +20,7 @@
             <li>
                 <strong><?php echo $message["username"]; ?>:</strong>
                 <?php echo $message["message"]; ?>
-                <form action="index.php?action=addMessage" method="post">
+                <form action="index.php?action=addReply" method="post">
                     <input type="hidden" name="subtopic_id" value="<?php echo $subtopic_id; ?>">
                     <input type="hidden" name="parent_id" value="<?php echo $message["message_id"]; ?>">
                     <textarea name="message"></textarea>
@@ -29,7 +29,7 @@
 
                 <?php
                 // Affichage des réponses à ce message
-                $replies = $postModel->getRepliesByParentId($message["message_id"]);
+                $replies = $postModel->getReplies($message["message_id"]);
 
                 if (!empty($replies)) {
                     echo "<ul>";
@@ -55,6 +55,7 @@
         <button type="submit">Envoyer</button>
     </form>
 </div>
+
 
 <a href="index.php?action=subtopic">Retour</a>
 

@@ -278,7 +278,27 @@ function addMessage() {
 }
 
 
+function addReply() {
+    try {
+        $db = connectDB();
+        $postModel = new PostModel($db);
 
+        // Récupération des données du formulaire
+        $content = $_POST["content"];
+        $user_id = $_SESSION["user_id"];
+        $message_id = $_POST["message_id"];
+        $parent_id = $_POST["parent_id"] ?? null; // parent_id peut être null si la réponse est une réponse à un message et non à une réponse
+
+        // Ajout de la réponse à la base de données
+        $postModel->addReply($content, $user_id, $message_id, $parent_id);
+
+        // Redirection vers la page des messages et des réponses
+        header("Location: index.php?action=viewMessages&subtopic_id=" . $_POST['subtopic_id'] . "&message_id=" . $message_id);
+        exit;
+    } catch (Exception $e) {
+        throw new Exception("Une erreur s'est produite : " . $e->getMessage());
+    }
+}
 
 
 

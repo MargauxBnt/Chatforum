@@ -147,7 +147,6 @@ function subtopic() {
             header("Location: index.php?action=subtopic&successMsg=".urlencode($successMsg));
             exit;
         }
-
         // Chargement de la vue des subtopics
         require_once './src/views/subtopic.php';
     } catch (Exception $e) {
@@ -257,26 +256,32 @@ function addMessage() {
         $db = connectDB();
         $postModel = new PostModel($db);
 
-        // Récupération des données du formulaire
-        $message = $_POST["message"];
-        $user_id = $_SESSION["user_id"];
-        $subtopic_id = $_POST["subtopic_id"];
+    // Récupération des données du formulaire
+    $message = $_POST["message"];
+    $user_id = $_SESSION["user_id"];
+    $subtopic_id = $_POST["subtopic_id"];
 
-        // Récupération de l'identifiant du topic associé au subtopic
-        $subtopic = $postModel->getSubtopicById($subtopic_id);
-        $topic_id = $subtopic["topic_id"];
-
-        // Ajout du message à la base de données
-        $postModel->addMessage($message, $user_id, $subtopic_id, $topic_id);
-
-        // Redirection vers la page des messages
-        header("Location: index.php?action=viewMessages&subtopic_id=" . $subtopic['subtopic_id']);
-        exit;
-    } catch (Exception $e) {
-        // Lancement d'une nouvelle exception avec un message d'erreur détaillé
-        throw new Exception("Une erreur s'est produite : " . $e->getMessage());
+    // Vérification que les champs ne sont pas vides
+    if (empty($message) || empty($user_id) || empty($subtopic_id)) {
+        throw new Exception("Veuillez remplir tous les champs.");
     }
+
+    // Récupération de l'identifiant du topic associé au subtopic
+    $subtopic = $postModel->getSubtopicById($subtopic_id);
+    $topic_id = $subtopic["topic_id"];
+
+    // Ajout du message à la base de données
+    $postModel->addMessage($message, $user_id, $subtopic_id, $topic_id);
+
+    // Redirection vers la page des messages
+    header("Location: index.php?action=viewMessages&subtopic_id=" . $subtopic['subtopic_id']);
+    exit;
+} catch (Exception $e) {
+    // Lancement d'une nouvelle exception avec un message d'erreur détaillé
+    throw new Exception("Une erreur s'est produite : " . $e->getMessage());
 }
+}
+
 
 
 function addReply() {
@@ -284,23 +289,27 @@ function addReply() {
         $db = connectDB();
         $postModel = new PostModel($db);
 
-        // Récupération des données du formulaire
-        $content = $_POST["content"];
-        $user_id = $_SESSION["user_id"];
-        $message_id = $_POST["message_id"];
-        $parent_id = $_POST["parent_id"] ?? null; // parent_id peut être null si la réponse est une réponse à un message et non à une réponse
-
-        // Ajout de la réponse à la base de données
-        $postModel->addReply($content, $user_id, $message_id, $parent_id);
-
-        // Redirection vers la page des messages et des réponses
-        header("Location: index.php?action=viewMessages&subtopic_id=" . $_POST['subtopic_id'] . "&message_id=" . $message_id);
-        exit;
-    } catch (Exception $e) {
-        throw new Exception("Une erreur s'est produite : " . $e->getMessage());
+    // Vérification des données du formulaire
+    if (empty($_POST["content"]) || empty($_SESSION["user_id"]) || empty($_POST["message_id"])) {
+        throw new Exception("Tous les champs doivent être remplis.");
     }
-}
 
+    // Récupération des données du formulaire
+    $content = $_POST["content"];
+    $user_id = $_SESSION["user_id"];
+    $message_id = $_POST["message_id"];
+    $parent_id = $_POST["parent_id"] ?? null; // parent_id peut être null si la réponse est une réponse à un message et non à une réponse
+
+    // Ajout de la réponse à la base de données
+    $postModel->addReply($content, $user_id, $message_id, $parent_id);
+
+    // Redirection vers la page des messages et des réponses
+    header("Location: index.php?action=viewMessages&subtopic_id=" . $_POST['subtopic_id'] . "&message_id=" . $message_id);
+    exit;
+} catch (Exception $e) {
+    throw new Exception("Une erreur s'est produite : " . $e->getMessage());
+}
+}
 
 
 function home() {

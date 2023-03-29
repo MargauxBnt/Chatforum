@@ -12,7 +12,6 @@
 <h1>Messages pour le sous-sujet "<?php echo $subtopic_title; ?>"<br>
 (<?php echo $topic_title; ?>)</h1>
 
-
 <h1>Messages</h1>
         <?php
         // Récupération des messages
@@ -32,7 +31,7 @@
                     </div>
         
                     <!-- Formulaire pour ajouter une réponse au message d'origine -->
-                    <div class="reply-form">
+                    <div class="reply-form1">
                         <form method="post" action="index.php?action=addReply">
                             <input type="hidden" name="message_id" value="<?= $message['message_id'] ?>">
                             <input type="hidden" name="subtopic_id" value="<?= $subtopic_id ?>">
@@ -60,7 +59,7 @@
                                     <form method="post" action="index.php?action=addReply">
                                         <input type="hidden" name="message_id" value="<?= $message['message_id'] ?>">
                                         <input type="hidden" name="subtopic_id" value="<?= $subtopic_id ?>">
-                                        <input type="hidden" name="parent_reply_id" value="<?= $reply['reply_id'] ?>">
+                                        <input type="hidden" name="parent_id" value="<?= $reply['reply_id'] ?>">
                                         <textarea name="content"></textarea><br>
                                         <input type="submit" value="Répondre">
                                     </form>
@@ -76,7 +75,6 @@
         }
         ?>
         
-
 <h2>Ajouter un message</h2>
 <div class="container">
     <form action="index.php?action=addMessage" method="post">

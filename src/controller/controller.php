@@ -1,6 +1,7 @@
 <?php
 
-require_once "./src/models/modelUser.php";
+require_once "./src/models/userModel.php";
+require_once "./src/models/postModel.php";
 require_once "./src/models/model.php";
 
 function register() {

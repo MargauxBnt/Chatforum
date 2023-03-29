@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 28 mars 2023 à 21:25
+-- Généré le : mer. 29 mars 2023 à 08:13
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -35,13 +35,12 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `user_id` int NOT NULL,
   `subtopic_id` int NOT NULL,
   `topic_id` int NOT NULL,
-  `parent_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`message_id`),
   KEY `user_id` (`user_id`),
   KEY `subtopic_id` (`subtopic_id`),
   KEY `topic_id` (`topic_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- --------------------------------------------------------
@@ -53,15 +52,16 @@ CREATE TABLE IF NOT EXISTS `messages` (
 DROP TABLE IF EXISTS `replies`;
 CREATE TABLE IF NOT EXISTS `replies` (
   `reply_id` int NOT NULL AUTO_INCREMENT,
-  `parent_id` int NOT NULL,
+  `user_id` int NOT NULL,
   `content` text NOT NULL,
   `message_id` int NOT NULL,
+  `parent_id` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`reply_id`),
-  KEY `parent_id` (`parent_id`),
-  KEY `message_id` (`message_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `message_id` (`message_id`),
+  KEY `fk_user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- --------------------------------------------------------
 
 --
 -- Structure de la table `subtopics`
@@ -124,17 +124,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
---
--- Contraintes pour les tables déchargées
---
-
 --
 -- Contraintes pour la table `replies`
 --
 ALTER TABLE `replies`
-  ADD CONSTRAINT `replies_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `messages` (`message_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `replies_ibfk_2` FOREIGN KEY (`message_id`) REFERENCES `messages` (`message_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_message_id` FOREIGN KEY (`message_id`) REFERENCES `messages` (`message_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -223,19 +223,7 @@ class PostModel {
         $stmt->bindValue(":subtopic_id", $subtopic_id);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }    
+    }     
+    
 
-    public function addReply($parent_id, $message_id) {
-        $stmt = $this->db->prepare("INSERT INTO replies (parent_id, message_id) VALUES (?, ?)");
-        $stmt->execute([$parent_id, $message_id]);
-        return $this->db->lastInsertId();
-    }
-    
-    public function getReplies($parent_id) {
-        $stmt = $this->db->prepare("SELECT replies.*, users.username FROM replies JOIN messages ON replies.message_id = messages.message_id JOIN users ON messages.user_id = users.user_id WHERE replies.parent_id = :parent_id ORDER BY replies.created_at ASC");
-        $stmt->bindValue(":parent_id", $parent_id);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-    
 }

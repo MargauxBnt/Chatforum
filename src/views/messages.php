@@ -12,38 +12,7 @@
 <h1>Messages pour le sous-sujet "<?php echo $subtopic_title; ?>"<br>
 (<?php echo $topic_title; ?>)</h1>
 
-<?php if (empty($messages)): ?>
-    <p>Aucun message pour le moment</p>
-<?php else: ?>
-    <ul>
-        <?php foreach ($messages as $message): ?>
-            <li>
-                <strong><?php echo $message["username"]; ?>:</strong>
-                <?php echo $message["message"]; ?>
-                <form action="index.php?action=addReply" method="post">
-                    <input type="hidden" name="subtopic_id" value="<?php echo $subtopic_id; ?>">
-                    <input type="hidden" name="parent_id" value="<?php echo $message["message_id"]; ?>">
-                    <textarea name="message"></textarea>
-                    <input type="submit" class="submit_form" value="Répondre">
-                </form>
 
-                <?php
-                // Affichage des réponses à ce message
-                $replies = $postModel->getReplies($message["message_id"]);
-
-                if (!empty($replies)) {
-                    echo "<ul>";
-                    foreach ($replies as $reply) {
-                        echo "<li><strong>" . $reply["username"] . " a répondu :</strong> " . $reply["message"] . "</li>";
-                    }
-                    echo "</ul>";
-                }
-                ?>
-
-            </li>
-        <?php endforeach; ?>
-    </ul>
-<?php endif; ?>
 
 
 

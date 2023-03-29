@@ -13,6 +13,47 @@
 (<?php echo $topic_title; ?>)</h1>
 
 
+<?php
+// Récupération des messages
+$messages = $postModel->getMessagesBySubtopicId($subtopic_id);
+
+if (empty($messages)) {
+    // Aucun message pour le moment
+    echo "Aucun message pour le moment.";
+} else {
+    // Affichage des messages et des réponses
+    foreach ($messages as $message) {
+        // Affichage du message
+        echo "<div>";
+        echo "<p>" . $message['message'] . "</p>";
+        echo "<p>Message posté par " . $message['username'] . " le " . $message['created_at'] . "</p>";
+        echo "</div>";
+        
+        // Récupération des réponses associées au message
+        $replies = $postModel->getReplies($message['message_id']);
+        
+        if (!empty($replies)) {
+            // Affichage des réponses
+            foreach ($replies as $reply) {
+                echo "<div style='margin-left: 20px;'>";
+                echo "<p>" . $reply['content'] . "</p>";
+                echo "<p>Réponse postée par " . $reply['username'] . " le " . $reply['created_at'] . "</p>";
+                echo "</div>";
+            }
+        }
+        
+        // Formulaire pour ajouter une réponse
+        echo "<div style='margin-left: 20px;'>";
+        echo "<form method='post' action='index.php?action=addReply'>";
+        echo "<input type='hidden' name='message_id' value='" . $message['message_id'] . "'>";
+        echo "<input type='hidden' name='subtopic_id' value='" . $subtopic_id . "'>";
+        echo "<textarea name='content'></textarea><br>";
+        echo "<input type='submit' value='Répondre'>";
+        echo "</form>";
+        echo "</div>";
+    }
+}
+?>
 
 
 
